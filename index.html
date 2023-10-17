@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  
+<head>
+  <meta charset="UTF-8">
+  <title>カメラとマイクテスト</title>
+  <script defer src="app.js"></script>
+  <link rel="manifest" href="manifest.json">
+</head>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+
+  #camera {
+    border: 1px solid black;
+  }
+
+  #snapshots img {
+    width: 160px;
+    height: 120px;
+    margin: 5px;
+  }
+
+  button {
+    margin-top: 10px;
+  }
+</style>
+
+<body>
+  <h1>カメラテスト</h1>
+  <video id="camera" width="640" height="480" autoplay></video>
+  <button id="capture">保存</button>
+  <div id="snapshots"></div>
+
+  <h1>マイクテスト</h1>
+  <button id="startRecording">録音開始</button>
+  <button id="stopRecording">録音停止</button>
+  <audio id="audioPlayer" controls></audio>
+</body>
+
+</html>
