@@ -6,18 +6,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // カメラの映像を取得してリアルタイム表示
 const video = document.getElementById('camera');
-navigator.mediaDevices.getUserMedia({ video: true })
-  .then(stream => {
-    video.srcObject = stream;
-  });
+
+navigator.mediaDevices.enumerateDevices().then(devices => {
+  const videoDevice = devices.find(device => device.kind === 'videoinput' && device.label.includes('後面'));
+  const constraints = videoDevice
+    ? { video: { deviceId: videoDevice.deviceId } }
+    : { video: true };
+
+  return navigator.mediaDevices.getUserMedia(constraints);
+})
+.then(stream => {
+  video.srcObject = stream;
+});
 
 // 保存ボタンで映像をキャプチャ
 const captureButton = document.getElementById('capture');
 const snapshots = document.getElementById('snapshots');
 captureButton.addEventListener('click', () => {
   const canvas = document.createElement('canvas');
-  canvas.width = 640;
-  canvas.height = 480;
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
   const ctx = canvas.getContext('2d');
   ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
   const img = document.createElement('img');
